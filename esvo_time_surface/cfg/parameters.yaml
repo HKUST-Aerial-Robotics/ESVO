@@ -1,0 +1,6 @@
+use_sim_time: True
+ignore_polarity: True
+time_surface_mode: 0 # 0: Backward; 1: Forward
+decay_ms: 30
+median_blur_kernel_size: 1
+max_event_queue_len: 20

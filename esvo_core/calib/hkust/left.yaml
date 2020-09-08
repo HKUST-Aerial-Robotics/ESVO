@@ -1,0 +1,28 @@
+image_width: 346
+image_height: 260
+camera_name: hkust_DAVIS346_left
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [263.796, 0, 176.994, 0, 263.738, 124.373, 0, 0, 1]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 4
+  data: [-0.386589, 0.157241, 0.000322143, 6.13759e-06]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [0.999809, 0.0161928, 0.0109163,
+        -0.0162088, 0.999868, 0.0013701,
+        -0.0108927, -0.00154678, 0.999939]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [189.705, 0, 165.382, 0, 0, 189.705, 121.295, 0, 0, 0, 1, 0]
+T_right_left:
+  rows: 3
+  cols: 4
+  data: [9.99990798e-01, -6.32492385e-04, -4.24307214e-03, -7.30597639e-02,
+         6.44736387e-04,  9.99995631e-01,  2.88489843e-03, -1.23275257e-03,
+         4.24122892e-03, -2.88760755e-03,  9.99986837e-01, -1.10420407e-03]

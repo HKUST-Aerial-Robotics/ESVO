@@ -1,0 +1,6 @@
+<launch>
+  <node name="EventMessageEditor" pkg="events_repacking_helper" type="EventMessageEditor" output="screen" required="true"
+    args="/home/zhouyi/workspace/dataset/DVS/hkust_HDR/2020-07-14-12-38-42.bag
+          /home/zhouyi/workspace/dataset/DVS/hkust_HDR/hahaha.bag">
+  </node>
+</launch>

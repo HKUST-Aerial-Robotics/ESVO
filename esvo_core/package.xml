@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>esvo_core</name>
+  <version>0.0.0</version>
+  <description>The esvo_core package.</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <!-- Example:  -->
+  <maintainer email="eeyzhou@ust.hk">Yi Zhou</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
+  <depend>dvs_msgs</depend>
+  <depend>glog_catkin</depend>
+  <depend>gflags_catkin</depend>
+  <depend>cv_bridge</depend>
+  <depend>minkindr</depend>
+  <depend>minkindr_conversions</depend>
+  <depend>image_geometry</depend>
+  <depend>image_transport</depend>
+  <depend>pcl_ros</depend>
+  <depend>tf_conversions</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>roscpp</depend>
+  <depend>dynamic_reconfigure</depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

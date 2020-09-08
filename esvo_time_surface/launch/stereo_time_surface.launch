@@ -1,0 +1,28 @@
+<launch>
+  <rosparam param="/use_sim_time">true</rosparam>
+  <!-- Time Surface (TS) generation -->
+  <node name="TimeSurface_left" pkg="esvo_time_surface" type="esvo_time_surface" output="screen">
+    <remap from="events" to="/davis/left/events" />
+    <remap from="image" to="/davis/left/image_raw" />
+    <remap from="camera_info" to="/davis/left/camera_info" />
+    <remap from="time_surface" to="TS_left" />
+
+    <rosparam command="load" file="$(find esvo_time_surface)/cfg/parameters.yaml" />
+  </node>
+
+  <node name="TimeSurface_right" pkg="esvo_time_surface" type="esvo_time_surface" output="screen">
+    <remap from="events" to="/davis/right/events" />
+    <remap from="image" to="/davis/right/image_raw" />
+    <remap from="camera_info" to="/davis/right/camera_info" />
+    <remap from="time_surface" to="TS_right" />
+
+    <rosparam command="load" file="$(find esvo_time_surface)/cfg/parameters.yaml" />
+  </node>
+
+  <!-- Synchronize both TS processing using an external timer -->
+  <node name="global_timer" pkg="rostopic" type="rostopic" args="pub -s -r 100 /sync std_msgs/Time 'now' " />
+
+  <!-- Visualization -->
+  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui"
+        args="--perspective-file $(find esvo_time_surface)/esvo_time_surface.perspective" />
+</launch>

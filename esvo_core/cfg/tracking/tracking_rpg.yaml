@@ -1,0 +1,18 @@
+invDepth_min_range: 0.2
+invDepth_max_range: 2
+TS_HISTORY_LENGTH: 100
+REF_HISTORY_LENGTH: 10
+tracking_rate_hz: 100
+patch_size_X: 1
+patch_size_Y: 1
+kernelSize: 5
+MAX_REGISTRATION_POINTS: 2000
+BATCH_SIZE: 300
+MAX_ITERATION: 10
+LSnorm: Huber #l2, Huber
+huber_threshold: 50
+MIN_NUM_EVENTS: 1000
+RegProblemType: 1 #( 0 numerical; 1 analytical)
+SAVE_TRAJECTORY: False
+PATH_TO_SAVE_TRAJECTORY: "/home/zhouyi/Desktop/ESVO_result/rpg_bin/" # CHANGE THIS PATH
+VISUALIZE_TRAJECTORY: True
