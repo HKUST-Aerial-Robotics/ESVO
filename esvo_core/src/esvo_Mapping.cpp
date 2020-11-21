@@ -678,7 +678,16 @@ void esvo_Mapping::eventsCallback(
 
   // add new ones and remove old ones
   for(const dvs_msgs::Event& e : msg->events)
+  {
     EQ.push_back(e);
+    int i = EQ.size() - 2;
+    while(i >= 0 && EQ[i].ts > e.ts) // we may have to sort the queue, just in case the raw event messages do not come in a chronological order.
+    {
+      EQ[i+1] = EQ[i];
+      i--;
+    }
+    EQ[i+1] = e;
+  }
   clearEventQueue(EQ);
 }
 

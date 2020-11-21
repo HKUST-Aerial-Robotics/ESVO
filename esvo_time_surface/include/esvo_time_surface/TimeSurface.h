@@ -126,6 +126,9 @@ private:
   void eventsCallback(const dvs_msgs::EventArray::ConstPtr& msg);
   void cameraInfoCallback(const sensor_msgs::CameraInfo::ConstPtr& msg);
 
+  // utils
+  void clearEventQueue();
+
   // calibration parameters
   cv::Mat camera_matrix_, dist_coeffs_;
   cv::Mat rectification_matrix_, projection_matrix_;
@@ -154,6 +157,7 @@ private:
   int events_maintained_size_;
 
   // containers
+  EventQueue events_;
   std::shared_ptr<EventQueueMat> pEventQueueMat_;
 
   // thread mutex

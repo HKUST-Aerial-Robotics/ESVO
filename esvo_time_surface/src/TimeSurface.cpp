@@ -408,7 +408,30 @@ void TimeSurface::eventsCallback(const dvs_msgs::EventArray::ConstPtr& msg)
     init(msg->width, msg->height);
 
   for(const dvs_msgs::Event& e : msg->events)
-    pEventQueueMat_->insertEvent(e);
+  {
+    events_.push_back(e);
+    int i = events_.size() - 2;
+    while(i >= 0 && events_[i].ts > e.ts)
+    {
+      events_[i+1] = events_[i];
+      i--;
+    }
+    events_[i+1] = e;
+
+    const dvs_msgs::Event& last_event = events_.back();
+    pEventQueueMat_->insertEvent(last_event);
+  }
+  clearEventQueue();
+}
+
+void TimeSurface::clearEventQueue()
+{
+  static constexpr size_t MAX_EVENT_QUEUE_LENGTH = 5000000;
+  if (events_.size() > MAX_EVENT_QUEUE_LENGTH)
+  {
+    size_t remove_events = events_.size() - MAX_EVENT_QUEUE_LENGTH;
+    events_.erase(events_.begin(), events_.begin() + remove_events);
+  }
 }
 
 } // namespace esvo_time_surface

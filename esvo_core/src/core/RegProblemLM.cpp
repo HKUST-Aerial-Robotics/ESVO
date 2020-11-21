@@ -265,6 +265,7 @@ int RegProblemLM::df(const Eigen::Matrix<double,6,1>& x, Eigen::MatrixXd& fjac) 
 
   // LOG(INFO) << "fjac:\n" << fjac;
   // LOG(INFO) << "Jacobian Computation takes " << tt.toc() << " ms.";
+  return 0;
 }
 
 void

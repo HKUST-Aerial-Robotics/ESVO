@@ -297,7 +297,16 @@ void esvo_Tracking::eventsCallback(
   std::lock_guard<std::mutex> lock(data_mutex_);
   // add new ones and remove old ones
   for(const dvs_msgs::Event& e : msg->events)
+  {
     events_left_.push_back(e);
+    int i = events_left_.size() - 2;
+    while(i >= 0 && events_left_[i].ts > e.ts) // we may have to sort the queue, just in case the raw event messages do not come in a chronological order.
+    {
+      events_left_[i+1] = events_left_[i];
+      i--;
+    }
+    events_left_[i+1] = e;
+  }
   clearEventQueue();
 }
 
