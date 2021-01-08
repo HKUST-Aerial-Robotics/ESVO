@@ -142,6 +142,7 @@ bool RegProblemSolverLM::solve_numerical()
   lmStatics_.nPoints_ = numDiff_regProblemPtr_->numPoints_;
   lmStatics_.nfev_ = nfev;
   lmStatics_.nIter_ = iteration;
+  return 0;
 }
 
 bool RegProblemSolverLM::solve_analytical()
@@ -212,6 +213,7 @@ bool RegProblemSolverLM::solve_analytical()
   lmStatics_.nPoints_ = regProblemPtr_->numPoints_;
   lmStatics_.nfev_ = nfev;
   lmStatics_.nIter_ = iteration;
+  return 0;
 }
 
 void RegProblemSolverLM::setRegPublisher(

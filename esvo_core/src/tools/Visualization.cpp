@@ -91,12 +91,12 @@ void Visualization::DrawPoint(
   if (index < 0)
     index = 0;
 
-  CvScalar color = CV_RGB(255.0f * r[index], 255.0f * g[index], 255.0f * b[index]);
+  cv::Scalar color = CV_RGB(255.0f * r[index], 255.0f * g[index], 255.0f * b[index]);
   //draw the point
   cv::Point point;
   point.x = location[0];
   point.y = location[1];
-  cv::circle(img, point, 1, color, CV_FILLED);
+  cv::circle(img, point, 1, color, cv::FILLED);
 }
 
 void Visualization::plot_eventMap(

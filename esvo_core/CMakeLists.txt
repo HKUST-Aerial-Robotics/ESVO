@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(esvo_core)
+# explicitly set std=c++14 to remove errors from pcl library
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(catkin_simple REQUIRED)
 catkin_simple(ALL_DEPS_REQUIRED)

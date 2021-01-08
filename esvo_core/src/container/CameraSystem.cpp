@@ -66,7 +66,7 @@ void PerspectiveCamera::preComputeRectifiedCoordinate()
        sensor_size, CV_32FC1, undistort_map1_, undistort_map2_);
     cv::Mat cvSrcMask = cvSrcMask.ones(height_, width_, CV_32F);
     cv::Mat cvDstMask = cvSrcMask.zeros(height_, width_, CV_32F);
-    cv::remap(cvSrcMask, cvDstMask, undistort_map1_, undistort_map2_, CV_INTER_LINEAR);
+    cv::remap(cvSrcMask, cvDstMask, undistort_map1_, undistort_map2_, cv::INTER_LINEAR);
     cv::threshold(cvDstMask, cvDstMask, 0.999, 255, cv::THRESH_BINARY);
     cvDstMask.convertTo(cvDstMask, CV_8U);
     cv::cv2eigen(cvDstMask, UndistortRectify_mask_);
@@ -86,7 +86,7 @@ void PerspectiveCamera::preComputeRectifiedCoordinate()
                    sensor_size, CV_32FC1, undistort_map1_, undistort_map2_);
     cv::Mat cvSrcMask = cvSrcMask.ones(height_, width_, CV_32F);
     cv::Mat cvDstMask = cvSrcMask.zeros(height_, width_, CV_32F);
-    cv::remap(cvSrcMask, cvDstMask, undistort_map1_, undistort_map2_, CV_INTER_LINEAR);
+    cv::remap(cvSrcMask, cvDstMask, undistort_map1_, undistort_map2_, cv::INTER_LINEAR);
     cv::threshold(cvDstMask, cvDstMask, 0.1, 255, cv::THRESH_BINARY);
     cvDstMask.convertTo(cvDstMask, CV_8U);
     cv::cv2eigen(cvDstMask, UndistortRectify_mask_);
