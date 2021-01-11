@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(catkin_simple REQUIRED)
 catkin_simple(ALL_DEPS_REQUIRED)
 
-SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O3")
 
 find_package(OpenCV REQUIRED)
 
