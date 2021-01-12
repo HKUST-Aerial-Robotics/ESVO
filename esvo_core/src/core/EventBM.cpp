@@ -86,6 +86,10 @@ bool esvo_core::core::EventBM::match_an_event(
   size_t upDisparity  = pDisparityBound.second;
   // rectify and floor the coordinate
   Eigen::Vector2d x_rect = camSysPtr_->cam_left_ptr_->getRectifiedUndistortedCoordinate(pEvent->x, pEvent->y);
+  // check if the rectified and undistorted coordinates are outside the image plane. (Added by Yi Zhou on 12 Jan 2021)
+  if(x_rect(0) < 0 || x_rect(0) > camSysPtr_->cam_left_ptr_->width_ - 1 ||
+     x_rect(1) < 0 || x_rect(1) > camSysPtr_->cam_left_ptr_->height_ - 1)
+    return false;
   // This is to avoid depth estimation happenning in the mask area.
   if(camSysPtr_->cam_left_ptr_->UndistortRectify_mask_(x_rect(1), x_rect(0)) <= 125)
     return false;

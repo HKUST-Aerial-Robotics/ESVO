@@ -13,7 +13,11 @@ Please refer to the **[ESVO Project Page](https://sites.google.com/view/esvo-pro
 
 # 1. Installation
 
-We have tested ESVO on Ubuntu 18.04.5 LTS + ROS melodic + gcc 5.5.0 + cmake (>=3.10), and Ubuntu 16.04 LTS + ROS kinetic + gcc 5.4.0 + cmake (>=3.10). For Ubuntu 16.04, you may need to upgrade your cmake.
+We have tested ESVO on machines with the following configurations
+* Ubuntu 18.04.5 LTS + ROS melodic + gcc 5.5.0 + cmake (>=3.10) + OpenCV 3.2
+* Ubuntu 16.04 LTS + ROS kinetic + gcc 5.4.0 + cmake (>=3.10) + OpenCV 3.2
+* Ubuntu 20.04 LTS + ROS Noetic + OpenCV 4
+For Ubuntu 16.04, you may need to upgrade your cmake.
 
 ## 1.1 Driver Installation
 
@@ -202,10 +206,13 @@ The event data fed to ESVO needs to be recorded at remarkbly higher streaming ra
 
 For convenience we provide a number of bag files, which have been rewritten to meet above requirement. They can be downloaded from the [ESVO Project Page](https://sites.google.com/view/esvo-project-page/home).
 
-
 # 6. License
 ESVO is licensed under the GNU General Public License Version 3 (GPLv3), see http://www.gnu.org/licenses/gpl.html.
 
 For commercial use, please contact Yi Zhou and Shaojie Shen. 
 
 Email addresses are available in the project page.
+
+# 7. Log
+* **12/01/2021** Merge with Suman Ghosh's pull request. 
+This commit fixed the running issue on machines with **Ubuntu 20.04 + ROS Noetic + OpenCV 4**.
