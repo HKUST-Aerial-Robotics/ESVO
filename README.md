@@ -17,6 +17,7 @@ We have tested ESVO on machines with the following configurations
 * Ubuntu 18.04.5 LTS + ROS melodic + gcc 5.5.0 + cmake (>=3.10) + OpenCV 3.2
 * Ubuntu 16.04 LTS + ROS kinetic + gcc 5.4.0 + cmake (>=3.10) + OpenCV 3.2
 * Ubuntu 20.04 LTS + ROS Noetic + OpenCV 4
+
 For Ubuntu 16.04, you may need to upgrade your cmake.
 
 ## 1.1 Driver Installation
