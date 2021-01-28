@@ -1,0 +1,51 @@
+<launch>
+		<rosparam param="/use_sim_time">true</rosparam>
+    
+    <!-- Time Surface generation -->
+    <node name="TimeSurface_left" pkg="esvo_time_surface" type="esvo_time_surface">
+        <remap from="events" to="/davis/left/events" />
+        <remap from="image" to="/davis/left/image_raw" />
+        <remap from="camera_info" to="/davis/left/camera_info" />
+        <remap from="time_surface" to="TS_left" />
+
+        <rosparam command="load" file="$(find esvo_core)/cfg/time_surface/ts_parameters.yaml" />
+    </node>
+
+    <node name="TimeSurface_right" pkg="esvo_time_surface" type="esvo_time_surface">
+        <remap from="events" to="/davis/right/events" />
+        <remap from="image" to="/davis/right/image_raw" />
+        <remap from="camera_info" to="/davis/right/camera_info" />
+        <remap from="time_surface" to="TS_right" />
+
+        <rosparam command="load" file="$(find esvo_core)/cfg/time_surface/ts_parameters.yaml" />
+    </node>
+
+		<!-- synchronize both renderings using the rosbag timer -->
+		<node name="global_timer" pkg="rostopic" type="rostopic" args="pub -s -r 50 /sync std_msgs/Time 'now' ">
+		</node>
+
+		<!-- Calibration folder -->
+    <arg name="calibInfoDirStr" default="$(find esvo_core)/calib/rpg"/>
+
+    <!-- Mapping node -->
+    <!-- launch-prefix="gdb -ex run -\-args" -->
+		<node name="esvo_MVStereo" pkg="esvo_core" type="esvo_MVStereo" output="screen" required="true">
+			<remap from="time_surface_left" to="/TS_left" />
+			<remap from="time_surface_right" to="/TS_right" />
+			<remap from="stamped_pose" to="/optitrack/davis_stereo" />
+			<remap from="events_left" to="/davis/left/events" />
+			<remap from="events_right" to="/davis/right/events" />
+
+			<rosparam param="dvs_frame_id">"marker"</rosparam>
+			<rosparam param="world_frame_id">"map"</rosparam>
+			<rosparam param="calibInfoDir" subst_value="true">$(arg calibInfoDirStr)</rosparam>
+
+			<rosparam command="load" file="$(find esvo_core)/cfg/mvstereo/mvstereo_rpg.yaml" />
+		</node>
+
+    <!-- Visualization -->
+    <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui"
+          args="--perspective-file $(find esvo_core)/esvo_mvstereo.perspective" />
+    <node pkg="rviz" type="rviz" name="rviz"
+          args="-d $(find esvo_core)/esvo_mvstereo.rviz" />
+</launch>

@@ -40,6 +40,13 @@ using RefPointCloudMap = std::map<ros::Time, PointCloud::Ptr>;
 
 using Transformation = kindr::minimal::QuatTransformation;
 
+inline static std::vector<dvs_msgs::Event*>::iterator EventVecPtr_lower_bound(
+  std::vector<dvs_msgs::Event*>& vEventPtr, ros::Time& t)
+{
+  return std::lower_bound(vEventPtr.begin(), vEventPtr.end(), t,
+                          [](const dvs_msgs::Event* e, const ros::Time &t){return e->ts.toSec() < t.toSec();});
+}
+
 using EventQueue = std::deque<dvs_msgs::Event>;
 inline static EventQueue::iterator EventBuffer_lower_bound(
   EventQueue& eb, ros::Time& t)

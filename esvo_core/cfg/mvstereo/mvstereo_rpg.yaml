@@ -1,0 +1,45 @@
+invDepth_min_range: 0.2
+invDepth_max_range: 2
+residual_vis_threshold: 20
+stdVar_vis_threshold: 0.015
+age_max_range: 10
+age_vis_threshold: 1
+fusion_radius: 0
+FUSION_STRATEGY: "CONST_FRAMES" #"CONST_FRAMES" or "CONST_POINTS"
+maxNumFusionFrames: 40
+maxNumFusionPoints: 5000
+Denoising: True
+SmoothTimeSurface: False
+Regularization: True
+PROCESS_EVENT_NUM: 1000
+TS_HISTORY_LENGTH: 100
+mapping_rate_hz: 20
+# DepthProblemConfig
+patch_size_X: 15
+patch_size_Y: 7
+LSnorm: Tdist #(Tdist or l2)
+Tdist_nu: 2.1897
+Tdist_scale: 16.6397
+Tdist_stdvar: 56.5347
+# Event Matcher (EM) parameters
+EM_Slice_Thickness: 0.001
+EM_Time_THRESHOLD: 0.0005
+EM_EPIPOLAR_THRESHOLD: 1.0
+EM_TS_NCC_THRESHOLD: 0.1
+EM_NUM_EVENT_MATCHING: 3000
+EM_PATCH_INTENSITY_THRESHOLD: 10
+EM_PATCH_VALID_RATIO: 0.75
+# EventBM parameters
+BM_half_slice_thickness: 0.001
+BM_min_disparity: 1
+BM_max_disparity: 40
+BM_step: 1
+BM_ZNCC_Threshold: 0.1
+BM_bUpDownConfiguration: False
+# MVStereo Mode
+MVStereoMode: 3
+#  PURE_EVENT_MATCHING  //0 EM [26]
+#  PURE_BLOCK_MATCHING  //1 BM
+#  EM_PLUS_ESTIMATION   //2 EM [26] + nonlinear opt.
+#  BM_PLUS_ESTIMATION   //3 ESVO's mapper
+#  SEMI_GLOBAL_MATCHING //4 [45]

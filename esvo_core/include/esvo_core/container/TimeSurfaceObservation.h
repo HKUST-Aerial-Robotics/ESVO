@@ -31,24 +31,24 @@ struct TimeSurfaceObservation
     cv_bridge::CvImagePtr &right,
     Transformation &tr,
     size_t id,
-    bool bCalcSaeGradient = false)
+    bool bCalcTsGradient = false)
     : tr_(tr),
       id_(id)
   {
     cv::cv2eigen(left->image, TS_left_);
     cv::cv2eigen(right->image, TS_right_);
 
-    if (bCalcSaeGradient)
+    if (bCalcTsGradient)
     {
 #ifdef TIME_SURFACE_OBSERVATION_LOG
       TicToc tt;
       tt.tic();
 #endif
-      cv::Mat cv_dSAE_du_left, cv_dSAE_dv_left;
-      cv::Sobel(left->image, cv_dSAE_du_left, CV_64F, 1, 0);
-      cv::Sobel(left->image, cv_dSAE_dv_left, CV_64F, 0, 1);
-      cv::cv2eigen(cv_dSAE_du_left, dTS_du_left_);
-      cv::cv2eigen(cv_dSAE_dv_left, dTS_dv_left_);
+      cv::Mat cv_dTS_du_left, cv_dTS_dv_left;
+      cv::Sobel(left->image, cv_dTS_du_left, CV_64F, 1, 0);
+      cv::Sobel(left->image, cv_dTS_dv_left, CV_64F, 0, 1);
+      cv::cv2eigen(cv_dTS_du_left, dTS_du_left_);
+      cv::cv2eigen(cv_dTS_dv_left, dTS_dv_left_);
 #ifdef TIME_SURFACE_OBSERVATION_LOG
       LOG(INFO) << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Sobel computation (" << id_ << ") takes " << tt.toc() << " ms.";
 #endif
@@ -60,7 +60,7 @@ struct TimeSurfaceObservation
     cv_bridge::CvImagePtr &left,
     cv_bridge::CvImagePtr &right,
     size_t id,
-    bool bCalcSaeGradient = false)
+    bool bCalcTsGradient = false)
     : id_(id)
   {
     cvImagePtr_left_ = left;
@@ -68,19 +68,19 @@ struct TimeSurfaceObservation
     cv::cv2eigen(left->image, TS_left_);
     cv::cv2eigen(right->image, TS_right_);
 
-    if (bCalcSaeGradient)
+    if (bCalcTsGradient)
     {
 #ifdef TIME_SURFACE_OBSERVATION_LOG
       TicToc tt;
       tt.tic();
 #endif
-      cv::Mat cv_dSAE_du_left, cv_dSAE_dv_left;
-      cv::Mat cv_dSAE_du_right, cv_dSAE_dv_right;
-      cv::Sobel(left->image, cv_dSAE_du_left, CV_64F, 1, 0);
-      cv::Sobel(left->image, cv_dSAE_dv_left, CV_64F, 0, 1);
+      cv::Mat cv_dTS_du_left, cv_dTS_dv_left;
+      cv::Mat cv_dTS_du_right, cv_dTS_dv_right;
+      cv::Sobel(left->image, cv_dTS_du_left, CV_64F, 1, 0);
+      cv::Sobel(left->image, cv_dTS_dv_left, CV_64F, 0, 1);
 
-      cv::cv2eigen(cv_dSAE_du_left, dTS_du_left_);
-      cv::cv2eigen(cv_dSAE_dv_left, dTS_dv_left_);
+      cv::cv2eigen(cv_dTS_du_left, dTS_du_left_);
+      cv::cv2eigen(cv_dTS_dv_left, dTS_dv_left_);
 
 #ifdef TIME_SURFACE_OBSERVATION_LOG
       LOG(INFO) << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Sobel computation (" << id_ << ") takes " << tt.toc() << " ms.";
@@ -135,15 +135,15 @@ struct TimeSurfaceObservation
 
   inline void computeTsNegativeGrad()
   {
-    cv::Mat cv_sae_flipped_left;
-    cv::eigen2cv(TS_negative_left_, cv_sae_flipped_left);
+    cv::Mat cv_TS_flipped_left;
+    cv::eigen2cv(TS_negative_left_, cv_TS_flipped_left);
 
-    cv::Mat cv_dFlippedSAE_du_left, cv_dFlippedSAE_dv_left;
-    cv::Sobel(cv_sae_flipped_left, cv_dFlippedSAE_du_left, CV_64F, 1, 0);
-    cv::Sobel(cv_sae_flipped_left, cv_dFlippedSAE_dv_left, CV_64F, 0, 1);
+    cv::Mat cv_dFlippedTS_du_left, cv_dFlippedTS_dv_left;
+    cv::Sobel(cv_TS_flipped_left, cv_dFlippedTS_du_left, CV_64F, 1, 0);
+    cv::Sobel(cv_TS_flipped_left, cv_dFlippedTS_dv_left, CV_64F, 0, 1);
 
-    cv::cv2eigen(cv_dFlippedSAE_du_left, dTS_negative_du_left_);
-    cv::cv2eigen(cv_dFlippedSAE_dv_left, dTS_negative_dv_left_);
+    cv::cv2eigen(cv_dFlippedTS_du_left, dTS_negative_du_left_);
+    cv::cv2eigen(cv_dFlippedTS_dv_left, dTS_negative_dv_left_);
   }
 
   Eigen::MatrixXd TS_left_, TS_right_;

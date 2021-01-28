@@ -58,6 +58,11 @@ class DepthFusion
     std::vector<DepthPoint> &dp_obs,
     DepthFrame::Ptr &df);
 
+  bool naive_propagate_one_point(
+    DepthPoint &dp_prior,
+    DepthPoint &dp_prop,
+    Eigen::Matrix<double, 4, 4> &T_prop_prior);
+
   private:
   CameraSystem::Ptr camSysPtr_;
   std::shared_ptr<DepthProblemConfig> dpConfigPtr_;
