@@ -45,7 +45,10 @@ The previous command should clone the the repositories into folders called *catk
 
 You may need `autoreconf` to compile glog_catkin. To install `autoreconf`, run
     
-	$ sudo apt-get install autoreconf
+	$ sudo apt-get install autoconf
+
+Note that above command may change on different version of Ubuntu. 
+Please refer to https://askubuntu.com/a/269423 for details.
 
 
 **yaml-cpp** is only used for loading calibration parameters from yaml files:
