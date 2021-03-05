@@ -6,7 +6,7 @@ Please refer to the **[ESVO Project Page](https://sites.google.com/view/esvo-pro
 
 ### Related Publications
 
-* **[Event-based Stereo Visual Odometry](https://arxiv.org/abs/2007.15548)**, *Yi Zhou, Guillermo Gallego, Shaojie Shen*, arXiv preprint 2020 (under review).
+* **[Event-based Stereo Visual Odometry](https://arxiv.org/abs/2007.15548)**, *Yi Zhou, Guillermo Gallego, Shaojie Shen*, IEEE Transactions on Robotics (T-RO) 2021 (in preprint).
 
 * **[Semi-dense 3D Reconstruction with a Stereo Event Camera](https://arxiv.org/abs/1807.07429)**, *Yi Zhou, Guillermo Gallego, Henri Rebecq, Laurent Kneip, Hongdong Li, Davide Scaramuzza*, ECCV 2018.
 
@@ -243,4 +243,7 @@ This commit fixed the running issue on machines with **Ubuntu 20.04 + ROS Noetic
 This module maybe useful for people who are interested in event-based multi-view stereo (MVS) methods,
 which typically assume poses are known as prior knowledge.
 Besides, methods in [26], [45] are also implemented for comparison purpose.
-Please refer to `2.3 esvo_core/mvstereo`.
+Please refer to `2.3 esvo_core/mvstereo`. 
+* **23/02/2021** ESVO was integrated into the modular iniVation DV software platform. 
+It runs at up to 200 fps on Jetson TX2, and is fully open-source. 
+Download here: https://lnkd.in/deuRKSK.
