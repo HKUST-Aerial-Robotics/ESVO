@@ -189,7 +189,7 @@ bool DepthProblemSolver::solve_single_problem_numerical(
 
   // Since there is no way to set a optimization bound
   // on x in Eigen (as far as I know), a handy outlier rejection is applied here.
-  if(x(0) <= 0.1)// we cannot see that far, right?
+  if(x(0) <= 0.001)// we cannot see that far, right?
     return false;
 
   // update

@@ -40,7 +40,10 @@ esvo_Mapping::esvo_Mapping(
       tools::param(pnh_, "LSnorm", std::string("Tdist")),
       tools::param(pnh_, "Tdist_nu", 0.0),
       tools::param(pnh_, "Tdist_scale", 0.0),
-      tools::param(pnh_, "ITERATION_OPTIMIZATION", 10))),
+      tools::param(pnh_, "ITERATION_OPTIMIZATION", 10),
+      tools::param(pnh_, "RegularizationRadius", 5),
+      tools::param(pnh_, "RegularizationMinNeighbours", 8),
+      tools::param(pnh_, "RegularizationMinCloseNeighbours", 8))),
     dpSolver_(camSysPtr_, dpConfigPtr_, NUMERICAL, NUM_THREAD_MAPPING),
     dFusor_(camSysPtr_, dpConfigPtr_),
     dRegularizor_(dpConfigPtr_),
@@ -80,7 +83,7 @@ esvo_Mapping::esvo_Mapping(
   bVisualizeGlobalPC_ = tools::param(pnh_, "bVisualizeGlobalPC", false);
   visualizeGPC_interval_ = tools::param(pnh_, "visualizeGPC_interval", 3);
   visualize_range_ = tools::param(pnh_, "visualize_range", 2.5);
-  numAddedPC_threshold_ = tools::param(pnh_, "NumGPC_added_oper_refresh", 1000);
+  numAddedPC_threshold_ = tools::param(pnh_, "NumGPC_added_per_refresh", 1000);
   // module parameters
   PROCESS_EVENT_NUM_   = tools::param(pnh_, "PROCESS_EVENT_NUM", 500);
   TS_HISTORY_LENGTH_  = tools::param(pnh_, "TS_HISTORY_LENGTH", 100);
@@ -145,7 +148,7 @@ esvo_Mapping::esvo_Mapping(
   if(bVisualizeGlobalPC_)
   {
     gpc_pub_ = nh_.advertise<PointCloud>("/esvo_mapping/pointcloud_global", 1);
-    pc_global_->reserve(500000);
+    pc_global_->reserve(5000000);
     t_last_pub_pc_ = 0.0;
   }
 
@@ -305,6 +308,7 @@ void esvo_Mapping::MappingAtTime(const ros::Time& t)
   ebm_.createMatchProblem(&TS_obs_, &st_map_, &vDenoisedEventsPtr_left_);
   ebm_.match_all_HyperThread(vEMP);
 #ifdef ESVO_CORE_MAPPING_DEBUG
+    LOG(INFO) << ">>>> The number of input events: " << vDenoisedEventsPtr_left_.size();
     LOG(INFO) << "++++ Block Matching (BM) generates " << vEMP.size() << " candidates.";
 #endif
   t_BM = tt_mapping.toc();
@@ -368,11 +372,18 @@ void esvo_Mapping::MappingAtTime(const ros::Time& t)
   for(auto it = dqvDepthPoints_.rbegin(); it != dqvDepthPoints_.rend(); it++)
   {
     numFusionCount += dFusor_.update(*it, depthFramePtr_, fusion_radius_);
-//    LOG(INFO) << "numFusionCount: " << numFusionCount;
+//    LOG(INFO) << "num depth point: " << depthFramePtr_->dMap_->size();
+//    LOG(INFO) << "numFusionCount: "  << numFusionCount;
   }
 
   TotalNumFusion_ += numFusionCount;
-  depthFramePtr_->dMap_->clean(pow(stdVar_vis_threshold_,2), age_vis_threshold_, invDepth_max_range_, invDepth_min_range_);
+  // Now let's play gently. We do not clean the resulting depth map at the beginning (as long as the number of "frames"
+  // to be fused is less than maxNumFusionFrames_), because the depth estimates given by SGM (initialization) would
+  // not be fused if the T-distribution statistics is used. Therefore, to guarantee a stable tracking at the beginning,
+  // we have to preserve as much depth points as possible. Note that, typically, most depth estimates got cleaned because
+  // of their "age", which is an attribute reflecting the "goodness of fit" besides standard variance.
+  if(dqvDepthPoints_.size() >= maxNumFusionFrames_)
+    depthFramePtr_->dMap_->clean(pow(stdVar_vis_threshold_,2), age_vis_threshold_, invDepth_max_range_, invDepth_min_range_);
   t_fusion = tt_mapping.toc();
 
   // regularization
@@ -442,7 +453,7 @@ bool esvo_Mapping::InitializationAtTime(const ros::Time &t)
   // Apply logical "AND" operation and transfer "disparity" to "invDepth".
   std::vector<DepthPoint> vdp_sgm;
   vdp_sgm.reserve(vEdgeletCoordinates.size());
-  double var_SGM = pow(stdVar_vis_threshold_*0.99,2);
+  double var_SGM = pow(0.001,2);
   for(size_t i = 0; i < vEdgeletCoordinates.size(); i++)
   {
     size_t x = vEdgeletCoordinates[i].first;
@@ -460,7 +471,7 @@ bool esvo_Mapping::InitializationAtTime(const ros::Time &t)
     Eigen::Vector3d p_cam;
     camSysPtr_->cam_left_ptr_->cam2World(p_img, invDepth, p_cam);
     dp.update_p_cam(p_cam);
-    dp.update(invDepth, var_SGM);
+    dp.update(invDepth, var_SGM);// assume the statics of the SGM's results are Guassian.
     dp.residual() = 0.0;
     dp.age() = age_vis_threshold_;
     Eigen::Matrix<double, 4, 4> T_world_cam = TS_obs_.second.tr_.getTransformationMatrix();
@@ -552,7 +563,7 @@ bool esvo_Mapping::dataTransferring()
     ros::Time t_begin(std::max(0.0, t_end.toSec() - 10 * BM_half_slice_thickness_));
     auto ev_end_it     = tools::EventBuffer_lower_bound(events_left_, t_end);
     auto ev_begin_it   = tools::EventBuffer_lower_bound(events_left_, t_begin);
-    const size_t MAX_NUM_Event_INVOLVED = 10000;
+    const size_t MAX_NUM_Event_INVOLVED = PROCESS_EVENT_NUM_;//10000
     vALLEventsPtr_left_.reserve(MAX_NUM_Event_INVOLVED);
     vCloseEventsPtr_left_.reserve(MAX_NUM_Event_INVOLVED);
     while(ev_end_it != ev_begin_it && vALLEventsPtr_left_.size() < MAX_NUM_Event_INVOLVED)
@@ -919,20 +930,22 @@ void esvo_Mapping::publishPointCloud(
 
     if(it->p_cam().norm() < visualize_range_)
       pc_near_->push_back(pcl::PointXYZ(p_world(0), p_world(1), p_world(2)));
-    if(it->p_cam().norm() > FarthestDistance)
-    {
-      FarthestDistance = it->p_cam().norm();
-      FarthestPoint = it->p_cam();
-    }
+    // For debug
+//    if(it->p_cam().norm() > FarthestDistance)
+//    {
+//      FarthestDistance = it->p_cam().norm();
+//      FarthestPoint = it->p_cam();
+//    }
   }
 #ifdef ESVO_CORE_MAPPING_DEBUG
   LOG(INFO) << "The farthest point (p_cam): " << FarthestPoint.transpose();
 #endif
 
+  // publish the local 3D map which is used by the tracker.
   if (!pc_->empty())
   {
 #ifdef ESVO_CORE_MAPPING_DEBUG
-    LOG(INFO) << "<<<<<<<<<(pointcloud)<<<<<<<<" << pc_->size() << " points are published";
+  LOG(INFO) << "<<<<<<<<<(pointcloud)<<<<<<<<" << pc_->size() << " points are published";
 #endif
     pcl::toROSMsg(*pc_, *pc_to_publish);
     pc_to_publish->header.stamp = t;
@@ -947,7 +960,8 @@ void esvo_Mapping::publishPointCloud(
       PointCloud::Ptr pc_filtered(new PointCloud());
       pcl::VoxelGrid<pcl::PointXYZ> sor;
       sor.setInputCloud(pc_near_);
-      sor.setLeafSize(0.03, 0.03, 0.03);
+      // sor.setLeafSize(0.03, 0.03, 0.03);// Used in small scale environment.
+      sor.setLeafSize(0.3, 0.3, 0.3);// Used in large scale environment.
       sor.filter(*pc_filtered);
 
       // copy the most current pc tp pc_global

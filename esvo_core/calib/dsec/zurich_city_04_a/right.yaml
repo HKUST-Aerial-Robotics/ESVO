@@ -1,0 +1,32 @@
+image_width: 640
+image_height: 480
+camera_name: RPG_DSEC_Prophesee_Gen3.1M
+camera_matrix: 
+  rows: 3
+  cols: 3
+  data: [552.182, 0, 336.874,
+         0, 551.445, 226.326,
+         0, 0, 1]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 4
+  data: [-0.0949368, 0.202115, 0.000582129, 0.00145529]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [0.999963, 0.00818053, -0.00267849,
+         -0.0081745, 0.999964, 0.00225394,
+         0.00269683, -0.00223196, 0.999994]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [534.094, 0, 335.446, -319.94,
+         0, 534.094, 223.233, 0,
+         0, 0, 1, 0]
+T_right_left:
+  rows: 3
+  cols: 4
+  data: [0.999759, -0.0113618, 0.0187657, -0.599011,
+         0.0114448, 0.999925, -0.0043174, -0.00490041,
+         -0.0187153, -0.0187153, 0.999815, 0.0016045]

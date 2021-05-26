@@ -28,17 +28,11 @@ Visualization::plot_map(
   {
     case InvDepthMap:
     {
-      std::vector<double> vDepth;
-      vDepth.reserve(10000);
       for (auto it = depthMapPtr->begin(); it != depthMapPtr->end(); it++)
       {
-        if (it->valid()
-            && it->variance() < pow(visualization_threshold1, 2)
+        if (it->valid() && it->variance() < pow(visualization_threshold1, 2)
             && it->age() >= (int) visualization_threshold2)
-        {
-          vDepth.emplace_back(1.0 / it->invDepth());
           DrawPoint(it->invDepth(), max_range, min_range, it->x(), img);
-        }
       }
       break;
     }

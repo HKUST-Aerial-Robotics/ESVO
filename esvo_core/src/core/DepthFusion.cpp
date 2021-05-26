@@ -81,7 +81,6 @@ DepthFusion::update(
     DepthPoint dp_prop;
     if (!propagate_one_point(dp_obs[i], dp_prop, T_frame_obs))
       continue;
-//    LOG(INFO) << "Update: dp_prop.residual(): " << dp_prop.residual();
     numFusion += fusion(dp_prop, df->dMap_, fusion_radius);
   }
   return numFusion;
@@ -138,6 +137,7 @@ DepthFusion::fusion(
         exit(-1);
 
       dp_new.residual() = dp_prop.residual();
+      dp_new.age() = dp_prop.age();
       Eigen::Vector3d p_cam;
       camSysPtr_->cam_left_ptr_->cam2World(dp_new.x(), dp_prop.invDepth(), p_cam);
       dp_new.update_p_cam(p_cam);

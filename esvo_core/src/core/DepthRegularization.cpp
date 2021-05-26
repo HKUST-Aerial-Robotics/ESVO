@@ -9,9 +9,9 @@ DepthRegularization::DepthRegularization(
 {
   dpConfigPtr_ = dpConfigPtr;
   //parameters
-  _regularizationRadius = 5;//10
-  _regularizationMinNeighbours = 8;//16
-  _regularizationMinCloseNeighbours = 8;//16
+  _regularizationRadius = dpConfigPtr_->RegularizationRadius_;//20;//5;//10
+  _regularizationMinNeighbours = dpConfigPtr_->RegularizationMinNeighbours_;//32;//8;//16
+  _regularizationMinCloseNeighbours = dpConfigPtr_->RegularizationMinCloseNeighbours_;//32;//8;//16
 }
 
 DepthRegularization::~DepthRegularization() {}

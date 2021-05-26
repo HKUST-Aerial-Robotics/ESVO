@@ -1,0 +1,38 @@
+invDepth_min_range: 0.001
+invDepth_max_range: 0.25
+residual_vis_threshold: 30 #20 #30 #20 #20
+stdVar_vis_threshold: 1 #0.1 #0.2
+age_max_range: 10
+age_vis_threshold: 1
+fusion_radius: 1
+FUSION_STRATEGY: CONST_FRAMES #"CONST_POINTS" # "CONST_FRAMES"
+maxNumFusionFrames: 5 #40
+maxNumFusionPoints: 20000 #8000 #3000
+Denoising: False
+SmoothTimeSurface: True #False
+Regularization: True
+bVisualizeGlobalPC: True
+visualizeGPC_interval: 0.5 #2[second]
+NumGPC_added_per_refresh: 10000
+visualize_range: 30
+PROCESS_EVENT_NUM: 10000 #20000
+TS_HISTORY_LENGTH: 100
+INIT_SGM_DP_NUM_THRESHOLD: 500
+mapping_rate_hz: 20
+# DepthProblemConfig
+patch_size_X: 15 #15
+patch_size_Y: 7 #7
+LSnorm: Tdist #Tdist #Tdist #Tdist # l2
+Tdist_nu: 2.182 #2.1897
+Tdist_scale: 17.277 #16.6397
+Tdist_stdvar: 59.763 #56.5347
+RegularizationRadius: 20
+RegularizationMinNeighbours: 32
+RegularizationMinCloseNeighbours: 32
+# EventBM parameters
+BM_half_slice_thickness: 0.001
+BM_min_disparity: 0
+BM_max_disparity: 150
+BM_step: 1
+BM_ZNCC_Threshold: 0.1
+BM_bUpDownConfiguration: False

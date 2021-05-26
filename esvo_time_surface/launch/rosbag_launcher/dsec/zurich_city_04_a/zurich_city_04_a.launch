@@ -1,0 +1,11 @@
+<launch>
+  <!-- ROS BAG -->
+  <rosparam param="/use_sim_time">true</rosparam>
+  <node pkg="rosbag" type="play" name="play" output="screen" required="true"
+    args="/home/zhouyi/workspace/dataset/DVS/DSEC/zurich_city_04_a/zurich_city_04_a_events.bag -r 0.05 -s 5 --clock">
+    <!-- MODIFY THE ABOVE DIRECTORY -->
+  </node>
+
+  <!-- Publish stereo camera calibration -->
+  <include file="$(find esvo_time_surface)/launch/rosbag_launcher/dsec/zurich_city_04_a/calib_info.launch" />
+</launch>

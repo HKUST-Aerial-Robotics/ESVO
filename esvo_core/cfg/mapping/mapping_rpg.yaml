@@ -13,7 +13,7 @@ SmoothTimeSurface: False
 Regularization: True
 bVisualizeGlobalPC: True
 visualizeGPC_interval: 3
-NumGPC_added_oper_refresh: 1000 #1500 #3000
+NumGPC_added_per_refresh: 1000
 visualize_range: 5.0
 PROCESS_EVENT_NUM: 1000
 TS_HISTORY_LENGTH: 100
