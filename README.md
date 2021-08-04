@@ -4,6 +4,9 @@
 
 Please refer to the **[ESVO Project Page](https://sites.google.com/view/esvo-project-page/home)** for more detailed information and for testing event data.
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3CPPs1gz04k/0.jpg)](https://www.youtube.com/watch?v=3CPPs1gz04k)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NByVeO4Ss5o/0.jpg)](https://www.youtube.com/watch?v=NByVeO4Ss5o)
+
 ### Related Publications
 
 * **[Event-based Stereo Visual Odometry](https://arxiv.org/abs/2007.15548)**, *Yi Zhou, Guillermo Gallego, Shaojie Shen*, IEEE Transactions on Robotics (T-RO) 2021.
