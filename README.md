@@ -6,8 +6,8 @@ Please refer to the **[ESVO Project Page](https://sites.google.com/view/esvo-pro
 
 **Videos**
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3CPPs1gz04k/1.jpg)](https://www.youtube.com/watch?v=3CPPs1gz04k)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NByVeO4Ss5o/1.jpg)](https://www.youtube.com/watch?v=NByVeO4Ss5o)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3CPPs1gz04k/mqdefault.jpg)](https://www.youtube.com/watch?v=3CPPs1gz04k) &nbsp;&nbsp; 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/NByVeO4Ss5o/mqdefault.jpg)](https://www.youtube.com/watch?v=NByVeO4Ss5o)
 
 ### Related Publications
 
