@@ -388,13 +388,13 @@ bool RegProblemLM::isValidPatch(
       patchCentreCoord(1) < (wy-1)/2 ||
       patchCentreCoord(1) > camSysPtr_->cam_left_ptr_->height_ - (wy-1)/2 - 1)
     return false;
-  if(mask(patchCentreCoord(1)-(wy-1)/2, patchCentreCoord(0)-(wx-1)/2) < 125)
+  if(mask(static_cast<int>(patchCentreCoord(1)-(wy-1)/2), static_cast<int>(patchCentreCoord(0)-(wx-1)/2)) < 125)
     return false;
-  if(mask(patchCentreCoord(1)-(wy-1)/2, patchCentreCoord(0)+(wx-1)/2) < 125)
+  if(mask(static_cast<int>(patchCentreCoord(1)-(wy-1)/2), static_cast<int>(patchCentreCoord(0)+(wx-1)/2)) < 125)
     return false;
-  if(mask(patchCentreCoord(1)+(wy-1)/2, patchCentreCoord(0)-(wx-1)/2) < 125)
+  if(mask(static_cast<int>(patchCentreCoord(1)+(wy-1)/2), static_cast<int>(patchCentreCoord(0)-(wx-1)/2)) < 125)
     return false;
-  if(mask(patchCentreCoord(1)+(wy-1)/2, patchCentreCoord(0)+(wx-1)/2) < 125)
+  if(mask(static_cast<int>(patchCentreCoord(1)+(wy-1)/2), static_cast<int>(patchCentreCoord(0)+(wx-1)/2)) < 125)
     return false;
   return true;
 }
