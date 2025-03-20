@@ -4,6 +4,8 @@
 
 Please refer to the **[ESVO Project Page](https://sites.google.com/view/esvo-project-page/home)** for more detailed information and for testing event data.
 
+**Please note that ESVO2 has been released!!**. You may find it at **[ESVO2](https://github.com/NAIL-HNU/ESVO2)**.
+
 **Videos**
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3CPPs1gz04k/mqdefault.jpg)](https://www.youtube.com/watch?v=3CPPs1gz04k) &nbsp;&nbsp; 
@@ -242,6 +244,7 @@ For commercial use, please contact Yi Zhou and Shaojie Shen.
 Email addresses are available in the project page.
 
 # 7. Log
+* **13/10/2024** ESVO2 is released. **(https://github.com/NAIL-HNU/ESVO2)**.
 * **12/01/2021** Merge with Suman Ghosh's pull request. 
 This commit fixed the running issue on machines with **Ubuntu 20.04 + ROS Noetic + OpenCV 4**.
 * **28/01/2021** We provide the independent mapping module of ESVO. 
